@@ -1,6 +1,6 @@
 //rfcredux
 import React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeNumber } from "../../../../redux/reducers/numberReducer";
 
 export default function DemoNumber(props) {

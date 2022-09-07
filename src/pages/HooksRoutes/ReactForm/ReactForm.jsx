@@ -18,7 +18,7 @@ export default function ReactForm() {
     console.log(userLoginRef.current);
     let promise = new Promise((resolve, fail) => {
       setTimeout(() => {
-        if (userLoginRef.current.userName == "cybersoft") {
+        if (userLoginRef.current.userName === "cybersoft") {
           console.log("Đăng nhập api");
           resolve("Đăng nhập thành công");
         } else {

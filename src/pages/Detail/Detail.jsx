@@ -1,44 +1,46 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { getProductDetailActionApi } from "../../redux/reducers/productReudcer";
 
-export default function () {
-  const [productDetail, setProductDetail] = useState({});
+export default function Detail(props) {
+  // const [productDetail, setProductDetail] = useState({});
+  const { productDetail } = useSelector((state) => state.productReducer);
+  const dispatch = useDispatch();
   const params = useParams();
-  // chuyển hướng thì dùng usenavigate
   const navigate = useNavigate();
-  const getProductDetailApi = async () => {
-    try {
-      let result = await axios({
-        url: "https://shop.cyberlearn.vn/api/Product/getbyid?id=" + params.id,
-        method: "GET",
-      });
-      console.log("Kết quả:", result.data.content);
-      // Sau khi laya kết quả từ api về đưa vào state arrProduct
-      setProductDetail(result.data.content);
-      console.log(productDetail);
-    } catch (err) {
-      console.log(err);
-    }
+
+  const getProductDetailApi = () => {
+    const actionThunk = getProductDetailActionApi(params.id);
+    // async dispatch => {
+    //logic api gọi tại đây
+
+    dispatch(actionThunk);
   };
+
   useEffect(() => {
-    // Chạy 2 trường hợp: Lần đầu tiên load page, và khi params.id  thay đổi  thì hàm này sẽ chạy
+    //chạy 2 trường hợp: Lần đầu tiên load page, và khi params.id thay đổi thì hàm này sẽ chạy
     getProductDetailApi();
   }, [params.id]);
+
   return (
     <div className="container">
-      <div className="row">
+      <div className="row mt-2">
         <div className="col-4">
-          <img src={productDetail.image} alt="..." className="w-100" />
+          <img className="w-100" src={productDetail.image} alt="..." />
         </div>
         <div className="col-8">
-          <h3> {productDetail.name}</h3>
+          <h3>{productDetail.name}</h3>
           <p>{productDetail.description}</p>
           <button className="btn btn-success">Add to cart</button>
         </div>
       </div>
+
       <div className="mt-2">
-        <h3>Related Product</h3>
+        <h3>Related product</h3>
         <div className="row">
           {/* ?: toán tử optional chaining: Nếu có thuộc tính đó thì mới chấm tiếp phương thức hoặc tính tiếp theo được, không có thì bỏ qua */}
           {productDetail.relatedProducts?.map((item, index) => {
@@ -46,10 +48,11 @@ export default function () {
               <div className="col-3" key={index}>
                 <div className="card">
                   <img
-                    src={item.image}
-                    alt="..."
+                    style={{ objectFit: "cover" }}
                     height={200}
                     className="w-100"
+                    src={item.image}
+                    alt="..."
                   />
                   <div className="card-body">
                     <p>{item.name}</p>
@@ -60,8 +63,9 @@ export default function () {
                     >
                       View detail
                     </NavLink>
+
                     <button
-                      className="btn btn-success mx-2"
+                      className="btn btn-secondary mx-2"
                       onClick={() => {
                         navigate(`/detail/${item.id}`);
                       }}
