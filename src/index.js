@@ -16,12 +16,13 @@ import { store } from './redux/configStore';
 import DemoNumber from './pages/HooksDemo/UseRedux/DemoNumber/DemoNumber';
 import { DemoFaceBookApp } from './pages/HooksDemo/UseRedux/DemoFaceBookApp/DemoFaceBookApp';
 import ReactForm from './pages/HooksRoutes/ReactForm/ReactForm';
-import Profile from './pages/HooksRoutes/ReactForm/Profile';
 import Home from './pages/Home/Home';
 import Detail from './pages/Detail/Detail';
 import Search from './pages/Search/Search';
 import DemoUseRoute from './pages/DemoUseRoute/DemoUseRoute';
 import DemoAnimation from './pages/DemoAnimation/DemoAnimation';
+import Login from './pages/Login/Login';
+import Profile from './pages/HooksRoutes/ReactForm/Profile';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <BrowserRouter>
@@ -52,6 +53,7 @@ root.render(
           <Route path='search' element={<Search />}></Route>
           <Route path='customhook' element={<DemoUseRoute />}></Route>
           <Route path='animation' element={<DemoAnimation />}></Route>
+          <Route path='login' element={<Login />}></Route>
 
         </Route>
       </Routes>

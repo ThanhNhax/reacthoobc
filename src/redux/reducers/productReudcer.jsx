@@ -46,7 +46,7 @@ export const getProductApiAction = async (dispatch2) => {
       url: "https://shop.cyberlearn.vn/api/Product",
       method: "GET",
     });
-    console.log("Kết quả: ", result.data.content);
+    // console.log("Kết quả: ", result.data.content);
 
     // dispatch lên redux
     const action = setArrProductAction(result.data.content);
