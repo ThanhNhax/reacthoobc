@@ -1,6 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  ACCESS_TOKEN,
+  clearCookie,
+  clearLocalStorage,
+  USER_LOGIN,
+} from "../../util/config";
 
 export default function HeaderHome(props) {
   const navigate = useNavigate();
@@ -8,15 +14,39 @@ export default function HeaderHome(props) {
   const renderNavlink = () => {
     if (userLogin) {
       return (
-        <NavLink className="nav-link" to="/profile">
-          Hello! {userLogin.email}
-        </NavLink>
+        <>
+          <li>
+            <NavLink className="nav-link" to="/profile">
+              Hello! {userLogin.email}
+            </NavLink>
+          </li>
+          <li>
+            <a
+              className="nav-link"
+              href="#"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                clearLocalStorage(USER_LOGIN);
+                clearLocalStorage(ACCESS_TOKEN);
+                clearCookie(ACCESS_TOKEN);
+                //F5 lại trang
+                // Và clear reudx
+                // window.location.reload();
+                window.location.href = "/";
+              }}
+            >
+              Đăng Xuất
+            </a>
+          </li>
+        </>
       );
     }
     return (
-      <NavLink className="nav-link" to="/login">
-        Login
-      </NavLink>
+      <li>
+        <NavLink className="nav-link" to="/login">
+          Login
+        </NavLink>
+      </li>
     );
   };
   return (
@@ -40,7 +70,12 @@ export default function HeaderHome(props) {
               Home
             </NavLink>
           </li>
-          <li className="nav-item ">{renderNavlink()}</li>
+          <li className="nav-item active">
+            <NavLink className="nav-link" to="/demohoc">
+              Demo HOC
+            </NavLink>
+          </li>
+          {renderNavlink()}
           <li className="nav-item">
             <NavLink className="nav-link" to="/detail">
               Detail

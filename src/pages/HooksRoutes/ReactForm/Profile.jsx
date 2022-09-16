@@ -12,17 +12,16 @@ export default function Profile(props) {
 
   useEffect(() => {
     const action = getProfileApi();
-
     dispatch(action);
   }, []);
   //?: optional chaining, nếu như object có thuộc tính đó thì xử lý, ngược lại không có thuộc tính dó (undefine) bỏ qua
   //orderHistory = undefine.map ????
   const renderOrderHistory = () => {
-    return userLogin.ordersHistory?.map((order, index) => {
+    return userLogin?.ordersHistory?.map((order, index) => {
       return (
         <div className="orderDetail" key={index}>
           <h3>
-            Order detail {moment(order.date).format("DD/MM/YYYY hh:mm:ss A")}
+            Order detail {moment(order?.date).format("DD/MM/YYYY hh:mm:ss A")}
           </h3>
           <table className="table">
             <thead>
@@ -36,7 +35,7 @@ export default function Profile(props) {
               </tr>
             </thead>
             <tbody>
-              {order.orderDetail.map((item, index) => {
+              {order?.orderDetail.map((item, index) => {
                 return (
                   <tr key={index}>
                     <td>{item.id}</td>
@@ -63,9 +62,9 @@ export default function Profile(props) {
       <div className="d-flex">
         <div className="w-25">
           <div className="profile mt-5">
-            <img src={userLogin.avatar} height={200} />
-            <div>email: {userLogin.email}</div>
-            <div>name: {userLogin.name}</div>
+            <img src={userLogin?.avatar} height={200} />
+            <div>email: {userLogin?.email}</div>
+            <div>name: {userLogin?.name}</div>
           </div>
         </div>
         <div className="w-75">

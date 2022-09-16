@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // Cấu hình browser router
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import UseStateDemo from './pages/HooksDemo/UseStateDemo/UseStateDemo';
 import DemoChonXe from './pages/HooksDemo/UseStateDemo/DemoChonXe';
 import UseEffectDemo from './pages/HooksDemo/UseEffectDemo/UseEffectDemo';
@@ -23,18 +23,20 @@ import DemoUseRoute from './pages/DemoUseRoute/DemoUseRoute';
 import DemoAnimation from './pages/DemoAnimation/DemoAnimation';
 import Login from './pages/Login/Login';
 import Profile from './pages/HooksRoutes/ReactForm/Profile';
+
+// Tạo ra 1 biến để quản lý chuyển hướng trang
+import { createBrowserHistory } from 'history';
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import DemoHoc from './pages/DemoHoc/DemoHoc';
+import AdminTemplate from './templates/AdminTemplate';
+import UserManagement from './pages/Admin/UserManagement/UserManagement';
+import ProductManagement from './pages/Admin/ProductManagement/ProductManagement';
+export const history = createBrowserHistory();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <BrowserRouter>
-  //   <Routes>
-  //     <Route path='' element={<App />}
-  //     >
-  //       <Route path='usestate' element={<UseStateDemo />}></Route>
-  //     </Route>
-  //   </Routes>
-  // </BrowserRouter>
+
   <Provider store={store}>
-    <BrowserRouter >
+    <HistoryRouter history={history} >
       <Routes>
         <Route path='' element={<App />}>
           <Route index element={<Home />}></Route>
@@ -54,10 +56,16 @@ root.render(
           <Route path='customhook' element={<DemoUseRoute />}></Route>
           <Route path='animation' element={<DemoAnimation />}></Route>
           <Route path='login' element={<Login />}></Route>
+          <Route path='demohoc' element={<DemoHoc />}></Route>
+          <Route path='*' element={<Navigate to={'/'} />}></Route>
 
         </Route>
+        <Route path='/users' element={<AdminTemplate component={UserManagement} />}></Route>
+        <Route path='/products' element={<AdminTemplate component={ProductManagement} />}></Route>
+
       </Routes>
-    </BrowserRouter>
+
+    </HistoryRouter>
   </Provider>
 );
 

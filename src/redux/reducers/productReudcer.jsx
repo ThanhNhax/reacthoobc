@@ -1,6 +1,7 @@
 //rxslice
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { http } from "../../util/config";
 
 const initialState = {
   arrProduct: [
@@ -42,10 +43,7 @@ export default productReudcer.reducer;
 export const getProductApiAction = async (dispatch2) => {
   // xử lý logic api để trả về kết quả
   try {
-    let result = await axios({
-      url: "https://shop.cyberlearn.vn/api/Product",
-      method: "GET",
-    });
+    let result = await http.get("/Product");
     // console.log("Kết quả: ", result.data.content);
 
     // dispatch lên redux
@@ -67,11 +65,8 @@ export const getProductDetailActionApi = (idProduct) => {
   return async (dispatch) => {
     //Logic api gọi tại đây
     try {
-      const result = await axios({
-        url: `https://shop.cyberlearn.vn/api/Product/getbyid?id=${idProduct}
-        `,
-        method: "GET",
-      });
+      const result = await http.get(`/Product/getbyid?id=${idProduct}
+      `);
       // Sau khi có dữ liệu guier lên acion loại 1 đưa lên reducer
       const actionLoai1 = setProductDetailAction(result.data.content);
       dispatch(actionLoai1);
